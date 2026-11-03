@@ -1,3 +1,9 @@
+/**
+ * Classe principal do projeto.
+ *
+ * Responsável por executar o programa e testar
+ * as funcionalidades da tabela hash.
+ */
 public class Main {
     static void main(String[] args) {
 
