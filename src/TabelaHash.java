@@ -15,7 +15,6 @@ public class TabelaHash {
      * os usuários e tratar colisões.
      */
     private ListaEncadeada[] tabela;
-
     /**
      * Cria uma tabela hash com a capacidade informada.
      *
@@ -50,17 +49,83 @@ public class TabelaHash {
     /**
      * Insere um usuário na tabela hash.
      *
+     * Não permite nomes repetidos.
+     *
      * @param nome nome do usuário
      * @param senha senha do usuário
+     * @return true se o usuário foi inserido, false se o nome já estava cadastrado
      * @throws IllegalArgumentException se o nome ou a senha forem nulos
      */
-    public void inserir(String nome, String senha) {
+    public boolean inserir(String nome, String senha) {
         if (nome == null || senha == null) {
             throw new IllegalArgumentException("Nome e senha não podem ser nulos;");
         }
 
         int indice = calcularIndice(nome);
-        tabela[indice].inserir(nome, senha);
+        return tabela[indice].inserir(nome, senha);
+    }
+    /**
+     * Verifica se um usuário está cadastrado na tabela hash.
+     *
+     * @param nome nome do usuário
+     * @return true se o usuário existe, false caso contrário
+     * @throws IllegalArgumentException se o nome for nulo
+     */
+    public boolean existe(String nome) {
+        if (nome == null) {
+            throw new IllegalArgumentException("Nome não pode ser nulo;");
+        }
+
+        int indice = calcularIndice(nome);
+        return tabela[indice].existe(nome);
+    }
+
+    /**
+     * Busca a senha de um usuário na tabela hash.
+     *
+     * @param nome nome do usuário
+     * @return senha do usuário ou null se o usuário não existir
+     * @throws IllegalArgumentException se o nome for nulo
+     */
+    public String buscar(String nome) {
+        if (nome == null) {
+            throw new IllegalArgumentException("Nome não pode ser nulo;");
+        }
+
+        int indice = calcularIndice(nome);
+        return tabela[indice].buscar(nome);
+    }
+
+    /**
+     * Autentica um usuário verificando o nome e a senha.
+     *
+     * @param nome nome do usuário
+     * @param senha senha informada
+     * @return true se o nome existe e a senha confere, false caso contrário
+     * @throws IllegalArgumentException se o nome ou a senha forem nulos
+     */
+    public boolean autenticar(String nome, String senha) {
+        if (nome == null || senha == null) {
+            throw new IllegalArgumentException("Nome e senha não podem ser nulos;");
+        }
+
+        int indice = calcularIndice(nome);
+        return tabela[indice].autenticar(nome, senha);
+    }
+    /**
+     * Remove um usuário da tabela hash.
+     *
+     * @param nome nome do usuário
+     * @return true se o usuário foi removido, false se não existia
+     * @throws IllegalArgumentException se o nome for nulo
+     */
+    public boolean remover(String nome) {
+        if (nome == null) {
+            throw new IllegalArgumentException("Nome não pode ser nulo;");
+        }
+
+        int indice = calcularIndice(nome);
+        return tabela[indice].remover(nome);
     }
 
 }
